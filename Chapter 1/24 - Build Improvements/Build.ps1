@@ -1,4 +1,5 @@
-﻿cd Build20
+﻿# Clean all artifacts then build and measure build times
+cd Build20
 if(test-path obj){
     rm -r obj
 }
