@@ -6,7 +6,16 @@ namespace AirportDI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            // Create a jet plane
+            var jetEngine = new JetEngine();
+            var fokker = new Plane(jetEngine);
+            fokker.Start();
+
+            // Create a properller plane
+            var propellerEngine = new PropellerEngine();
+            var cessna = new Plane(propellerEngine);
+            cessna.Start();
+
         }
     }
 }
