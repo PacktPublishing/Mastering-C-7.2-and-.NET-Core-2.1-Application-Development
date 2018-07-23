@@ -9,7 +9,7 @@ namespace AirportDI
             var fokker = new Plane();
             fokker.Start();
 
-            // Create a properller plane
+            // Create a Propeller plane
             var cessna = new Plane();
             var propellerEngine = new PropellerEngine();
             cessna.Engine = propellerEngine;
