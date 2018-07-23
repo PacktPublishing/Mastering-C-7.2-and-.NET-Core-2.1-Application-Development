@@ -1,6 +1,5 @@
 ﻿using System;
 using Autofac;
-
 namespace AirportDI
 {
     class Program
@@ -16,8 +15,8 @@ namespace AirportDI
             //get a jet engine from our container
             using (var scope = Container.BeginLifetimeScope())
             {
-                var fokker = scope.Resolve<IEngine>();
-                fokker.Start();
+                var jet = scope.Resolve<IEngine>();
+                jet.Start();
             }
         }
     }

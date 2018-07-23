@@ -15,7 +15,6 @@ namespace AirportDI
             var propellerEngine = new PropellerEngine();
             var cessna = new Plane(propellerEngine);
             cessna.Start();
-
         }
     }
 }
