@@ -1,0 +1,26 @@
+<div>
+  <form #studentForm="ngForm" (ngSubmit)="addStudent()">
+    <div class="form-group">
+      <label for="name">Surname</label>
+      <input type="text" class="form-control" name="surname" required [(ngModel)]="student.surname" #title="ngModel">
+    </div>
+    <div class="form-group">
+      <label for="link">Othernames</label>
+      <input type="text" class="form-control" name="othernames" required [(ngModel)]="student.otherNames" #link="ngModel">
+    </div>
+    <div class="form-group">
+      <label for="link">Date Of Birth</label>
+      <input type="text" class="form-control" name="dateOfBirth" required [(ngModel)]="student.dateOfBirth" #link="ngModel">
+    </div>
+    <div class="form-group">
+      <label for="link">Height</label>
+      <input type="text" class="form-control" name="height" required [(ngModel)]="student.height" #link="ngModel">
+    </div>
+    <div class="form-group">
+      <label for="link">Notes</label>
+      <input type="text" class="form-control" name="notes" required [(ngModel)]="student.notes" #link="ngModel">
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="!studentForm.form.valid">Submit</button>
+    <button type="reset" class="btn" (click)="studentForm.reset()">Reset</button>
+  </form>
+</div>
