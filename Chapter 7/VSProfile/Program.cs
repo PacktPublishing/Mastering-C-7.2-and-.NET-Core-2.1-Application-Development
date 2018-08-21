@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading;
 
 namespace VSProfile
 {
@@ -8,12 +9,12 @@ namespace VSProfile
         static void Main(string[] args)
         {
             GenerateWithStringBuilder();
-            Console.ReadLine();
+            Thread.Sleep(TimeSpan.FromSeconds(5));
         }
         static string GenerateWithStringBuilder()
         {
             var sb = new StringBuilder();
-            for (var i = 0; i < 5_000; i++)
+            for (var i = 0; i < 1_000; i++)
             {
                 sb.Append(i.ToString());
             }
