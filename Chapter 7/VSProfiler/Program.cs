@@ -9,7 +9,7 @@
         static string GenerateWithString()
         {
             var str = "";
-            for (var i = 0; i < 100_000; i++)
+            for (var i = 0; i < 5000; i++)
             {
                 str += i.ToString();
             }
