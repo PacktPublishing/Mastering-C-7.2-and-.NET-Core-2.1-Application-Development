@@ -2,6 +2,7 @@
 using System.Linq;
 using EFProfiling.Models;
 using HibernatingRhinos.Profiler.Appender.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFProfiling
 {
@@ -12,9 +13,9 @@ namespace EFProfiling
             EntityFrameworkProfiler.Initialize();
             using (var ctx = new NorthwndContext())
             {
-                var query = ctx.Customers.Where(x => x.CompanyName.StartsWith("A")).ToList();
-                foreach (var result in query)
-                    Console.WriteLine($"Company: {result.CompanyName}");
+                var customersV1 = ctx.Customers.Where(x => x.CompanyName.StartsWith("A")).ToList();
+                var customersV2 = ctx.Customers.Where(x => EF.Functions.Like(x.CompanyName, "A%")).ToList();
+                Console.WriteLine($"Version 1 returned {customersV1.Count} And 2 {customersV2.Count}");
             }
         }
     }
