@@ -1,0 +1,16 @@
+SELECT
+    Customers.CustomerID,
+    Customers.CompanyName,
+    Customers.ContactName,
+    Customers.ContactTitle,
+    Customers.Address,
+    Customers.City,
+    Customers.Region,
+    Customers.PostalCode,
+    Customers.Country,
+    Customers.Phone,
+    Customers.Fax
+INTO
+    CustomersNew
+FROM
+    dbo.Customers;
