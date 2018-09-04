@@ -9,5 +9,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.2" />
     <PackageReference Include="microsoft.entityframeworkcore.sqlserver" Version="2.1.2" />
+    <PackageReference Include="NhibernateProfiler.Appender" Version="5.0.5027" />
   </ItemGroup>
 </Project>
