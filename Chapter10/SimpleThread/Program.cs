@@ -5,14 +5,29 @@ namespace SimpleThread
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main()
         {
-            var tMary = new Thread(Program.Greet);
-            tMary.Start("Mary");
+            using (var token = new CancellationTokenSource())
+            {
+                ThreadPool.QueueUserWorkItem(new WaitCallback(Greet), token.Token);
+                Thread.Sleep(TimeSpan.FromSeconds(5));
+                token.Cancel();
+                Thread.Sleep(TimeSpan.FromSeconds(5));
+                Console.WriteLine("Completed");
+            }
         }
-        static void Greet(object Name)
+        static void Greet(object o)
         {
-            Console.WriteLine($"Hello {Name} from {Thread.CurrentThread.ManagedThreadId}");
+            var token = (CancellationToken)o;
+            for (int i = 0; i < 5_000; i++)
+            {
+                if (token.IsCancellationRequested)
+                {
+                    Console.WriteLine($"Cancel greeting on {i++}");
+                    break;
+                }
+                Thread.SpinWait((int)TimeSpan.FromMinutes(1).TotalMilliseconds);
+            }
         }
     }
 }
