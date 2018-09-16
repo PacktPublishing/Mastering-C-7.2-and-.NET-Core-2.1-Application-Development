@@ -7,9 +7,13 @@ namespace SimpleThread
     {
         static void Main(string[] args)
         {
-            var threads = Process.GetCurrentProcess().Threads;
-            foreach (ProcessThread thread in threads)
-                Console.WriteLine($"{thread.Id} started at {thread.StartTime} at {thread.StartAddress}");
+            var t = new Thread(new ThreadStart(Greet));
+            t.Start();
+            Console.WriteLine($"Hello from main: {Thread.CurrentThread.ManagedThreadId} ");
+        }
+        static void Greet()
+        {
+            Console.WriteLine($"Hello from thread: {Thread.CurrentThread.ManagedThreadId} ");
         }
     }
 }
