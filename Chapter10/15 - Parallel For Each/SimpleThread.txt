@@ -1,0 +1,38 @@
+using System;
+using System.Threading;
+using System.Diagnostics;
+namespace SimpleThread
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            using (var cts = new CancellationTokenSource())
+            {
+                // Pass the token to the cancelable operation.
+                ThreadPool.QueueUserWorkItem(new WaitCallback(DoWork), cts.Token);
+                Thread.Sleep(TimeSpan.FromSeconds(20));
+
+                // Request cancellation.
+                cts.Cancel();
+                Console.WriteLine("Cancellation set in token source...");
+                cts.Dispose();
+            }
+        }
+        static void DoWork(object o)
+        {
+            var token = (CancellationToken)o;
+            for (var i = 0; i < 100; i++)
+            {
+                if (token.IsCancellationRequested)
+                {
+                    Console.WriteLine("Cancel reequested");
+                    break;
+                }
+                Console.Write("..");
+                Thread.Sleep(TimeSpan.FromSeconds(1));
+            }
+            Console.WriteLine("Completed");
+        }
+    }
+}
