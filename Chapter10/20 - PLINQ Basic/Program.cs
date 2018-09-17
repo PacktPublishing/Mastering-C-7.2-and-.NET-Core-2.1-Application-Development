@@ -16,12 +16,10 @@ namespace SimpleThread
             var numbers = Enumerable.Range(0, 10_000);
             return numbers.Select(x => Math.Sqrt(x)).ToArray();
         }
-        [Benchmark]
         public double[] Parallel()
         {
             var numbers = Enumerable.Range(0, 10_000);
             return numbers.Select(x => Math.Sqrt(x)).AsParallel().ToArray();
         }
-
     }
 }
