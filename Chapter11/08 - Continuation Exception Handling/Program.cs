@@ -16,7 +16,7 @@ namespace TaskSample
 
             var success = taskWork.ContinueWith(prior =>
             {
-               Console.WriteLine($"I failed: {prior.Exception.InnerException.GetType().Name}");
+               Console.WriteLine($"I succeeded!");
             }, TaskContinuationOptions.NotOnFaulted);
             Console.ReadLine();
         }
