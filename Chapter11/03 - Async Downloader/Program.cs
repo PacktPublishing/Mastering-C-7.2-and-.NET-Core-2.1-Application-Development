@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace TaskSample
@@ -12,10 +14,10 @@ namespace TaskSample
             var result = await DownloadHomePages();
             Console.WriteLine(result);
         }
-        static Task<List<string>> DownloadHomePages()
+        static Task<string> DownloadHomePages()
         {
             var client = new HttpClient();
-            var bag = new List<string>();
+            var bag = new ConcurrentBag<string>();
             var sites = new string[] {"https://www.packtpub.com","https://www.amazon.com","https://www.google.com",
     "https://www.apple.com","https://www.salesforce.com","http://www.microsoft.com","http://www.oracle.com",
     "https://www.ibm.com","https://www.redhat.com","https://www.ubuntu.com","https://www.adobe.com",
@@ -25,7 +27,10 @@ namespace TaskSample
             {
                 bag.Add(client.GetStringAsync(site).Result);
             }
-            return Task.FromResult(bag);
+            var sb = new StringBuilder();
+            foreach (var str in bag.ToArray())
+                sb.AppendLine(str);
+            return Task.FromResult(sb.ToString());
         }
     }
 }
