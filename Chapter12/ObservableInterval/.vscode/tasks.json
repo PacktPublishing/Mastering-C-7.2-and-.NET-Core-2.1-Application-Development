@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/ObservableGenerateTest.csproj"
+                "${workspaceFolder}/ObservableIntervalTest.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
