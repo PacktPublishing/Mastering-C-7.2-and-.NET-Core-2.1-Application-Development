@@ -24,5 +24,4 @@ namespace TemperatureChange
                 handler(this, e);
         }
     }
-
 }
