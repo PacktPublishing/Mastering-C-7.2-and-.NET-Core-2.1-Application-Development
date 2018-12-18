@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="serilog.enrichers.thread" Version="3.0.0" />
+    <PackageReference Include="serilog.sinks.console" Version="3.1.1" />
+    <PackageReference Include="system.reactive" Version="4.1.2" />
+  </ItemGroup>
+
+</Project>
