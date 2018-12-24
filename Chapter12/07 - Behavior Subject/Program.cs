@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Subjects;
+using Serilog;
 
 namespace BehaviorSubject
 {
@@ -7,15 +8,16 @@ namespace BehaviorSubject
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
             var subject = new BehaviorSubject<string>("[Blank]");
             //Register the subscription
             PrintNames(subject);
-            //Add items
+            //Add the first item
             subject.OnNext("John");
         }
         static void PrintNames(IObservable<string> seq)
         {
-            seq.Subscribe(val => Console.WriteLine($"{val} has been added"));
+            seq.Subscribe(val => Log.Information("{val} has been added", val));
         }
     }
 }

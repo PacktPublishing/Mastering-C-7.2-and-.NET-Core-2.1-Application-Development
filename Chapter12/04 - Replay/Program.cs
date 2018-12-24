@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Subjects;
+using Serilog;
 
 namespace Replay
 {
@@ -7,6 +8,7 @@ namespace Replay
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
             var subject = new ReplaySubject<string>();
             //Add items
             subject.OnNext("John");
@@ -17,7 +19,7 @@ namespace Replay
         }
         static void PrintNames(IObservable<string> seq)
         {
-            seq.Subscribe(val => Console.WriteLine($"{val} has been added"));
+            seq.Subscribe(val => Log.Information("{val} has been added", val));
         }
     }
 }

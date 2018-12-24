@@ -1,4 +1,5 @@
 ﻿using System;
+using Serilog;
 
 namespace BasicObserver
 {
@@ -6,6 +7,9 @@ namespace BasicObserver
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
             var o = new SimpleObserver<string>();
             o.OnNext("first");
             o.OnNext("second");

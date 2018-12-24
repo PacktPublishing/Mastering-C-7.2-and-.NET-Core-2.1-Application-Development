@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
+using Serilog;
 
 namespace ObservableIntervalTest
 {
@@ -7,10 +8,11 @@ namespace ObservableIntervalTest
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
             // Publish every second
             var obs = Observable.Interval(TimeSpan.FromSeconds(1));
 
-            using (obs.Subscribe(x => Console.WriteLine($"Produced item #{x}")))
+            using (obs.Subscribe(x => Log.Information("Produced item #{item}", x)))
             {
                 Console.ReadLine();
             }

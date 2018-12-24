@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Subjects;
+using Serilog;
 
 namespace AsyncSubject
 {
@@ -7,6 +8,7 @@ namespace AsyncSubject
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
             var subject = new AsyncSubject<string>();
             //Add items
             subject.OnNext("John");
@@ -19,7 +21,7 @@ namespace AsyncSubject
         }
         static void PrintNames(IObservable<string> seq)
         {
-            seq.Subscribe(val => Console.WriteLine($"{val} has been added"));
+            seq.Subscribe(val => Log.Information("{val} has been added",val));
         }
     }
 }
