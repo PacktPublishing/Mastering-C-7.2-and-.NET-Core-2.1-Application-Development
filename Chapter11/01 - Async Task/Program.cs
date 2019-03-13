@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using Serilog;
 
 namespace TaskSample
 {
@@ -7,11 +8,12 @@ namespace TaskSample
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
             var client = new HttpClient();
             var resultTask = client.GetStringAsync("https://www.packtpub.com");
             Console.WriteLine("Performing other operations...");
             //Now obtain the resu;t
-            Console.WriteLine(resultTask.Result);
+            Log.Information(resultTask.Result);
         }
     }
 }

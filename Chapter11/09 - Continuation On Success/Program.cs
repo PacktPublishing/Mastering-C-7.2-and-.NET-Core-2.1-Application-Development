@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace TaskSample
 {
@@ -8,14 +9,15 @@ namespace TaskSample
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
             var firstTask = Task.Factory.StartNew(() =>
             {
-                Console.WriteLine("I am running first");
+                Log.Information("I am running first");
                 Thread.Sleep(TimeSpan.FromSeconds(5));
             });
             var secondTask = firstTask.ContinueWith(previous =>
             {
-                Console.WriteLine("I am running second");
+                Log.Information("I am running second");
             });
             firstTask.Wait();
         }

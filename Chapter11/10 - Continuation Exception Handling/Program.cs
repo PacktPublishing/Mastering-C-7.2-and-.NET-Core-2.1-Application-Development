@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace TaskSample
 {
@@ -7,16 +8,17 @@ namespace TaskSample
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
             var taskWork = Task.Factory.StartNew(() => throw new ApplicationException("Error!"));
 
             var failure = taskWork.ContinueWith(prior =>
             {
-                Console.WriteLine($"I failed: {prior.Exception.InnerException.GetType().Name}");
+                Log.Error("I failed: {error}", prior.Exception.InnerException.GetType().Name);
             }, TaskContinuationOptions.OnlyOnFaulted);
 
             var success = taskWork.ContinueWith(prior =>
             {
-               Console.WriteLine($"I succeeded!");
+                Log.Information("I succeeded!");
             }, TaskContinuationOptions.NotOnFaulted);
             Console.ReadLine();
         }

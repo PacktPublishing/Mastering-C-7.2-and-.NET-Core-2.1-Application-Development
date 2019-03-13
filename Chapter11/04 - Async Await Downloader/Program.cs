@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace TaskSample
 {
@@ -11,8 +12,9 @@ namespace TaskSample
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
             var task = DownloadHomePages();
-            Console.WriteLine(task.Result);
+            Log.Information(task.Result);
         }
         static async Task<string> DownloadHomePages()
         {

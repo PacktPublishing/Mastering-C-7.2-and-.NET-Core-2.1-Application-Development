@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace TaskSample
 {
@@ -8,10 +9,11 @@ namespace TaskSample
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
             Task.Factory.StartNew<DateTime>(() => DateTime.Now)
             .ContinueWith(previous =>
             {
-                Console.WriteLine($"The time from the previous task was {previous.Result}");
+                Log.Information("The time from the previous task was {time}", previous.Result);
             }).Wait();
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace Attached_Parent___Child
 {
@@ -8,19 +9,19 @@ namespace Attached_Parent___Child
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
             var parent = Task.Factory.StartNew(() =>
             {
-                Console.WriteLine("Parent started ...");
+                Log.Information("Parent started ...");
                 var child = Task.Factory.StartNew(() =>
                 {
-                    Console.WriteLine("Attached child started ...");
+                    Log.Information("Attached child started ...");
                     Thread.SpinWait(TimeSpan.FromSeconds(5).Seconds);
-                    Console.WriteLine("Attached child completed ...");
+                    Log.Information("Attached child completed ...");
                 }, TaskCreationOptions.AttachedToParent);
             });
             parent.Wait();
-            Console.WriteLine("Parent completed ...");
+            Log.Information("Parent completed ...");
         }
     }
 }
-

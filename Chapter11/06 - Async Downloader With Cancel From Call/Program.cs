@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace TaskSample
 {
@@ -10,17 +11,18 @@ namespace TaskSample
     {
         static async Task Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
             try
             {
                 var source = new CancellationTokenSource();
                 source.CancelAfter(TimeSpan.FromSeconds(3));
                 var result = await DownloadHomePages(source);
                 foreach (var item in result)
-                    Console.WriteLine(item);
+                    Log.Information(item);
             }
             catch (AggregateException ex)
             {
-                Console.WriteLine(ex.Flatten().InnerException.Message);
+                Log.Error(ex.Flatten().InnerException.Message);
             }
         }
         static Task<List<string>> DownloadHomePages(CancellationTokenSource source)
@@ -36,7 +38,7 @@ namespace TaskSample
              {
                  foreach (var site in sites)
                  {
-                     Console.WriteLine($"Processing {site}");
+                     Log.Information("Processing {site}", site);
                      token.ThrowIfCancellationRequested();
                      bag.Add(client.GetStringAsync(site).Result);
                  }

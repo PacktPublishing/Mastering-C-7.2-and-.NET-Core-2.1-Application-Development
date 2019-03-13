@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace TaskSample
 {
@@ -10,6 +11,7 @@ namespace TaskSample
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
             var client = new HttpClient();
             var bag = new ConcurrentBag<string>();
             var task = Task.Factory.StartNew(() =>
@@ -28,12 +30,12 @@ namespace TaskSample
                 }, TaskCreationOptions.AttachedToParent);
             }
             );
-            var success = task.ContinueWith(prior => Console.WriteLine($"Success! {bag.Count}"),
+            var success = task.ContinueWith(prior => Log.Information("Success! {items}", bag.Count),
                 TaskContinuationOptions.NotOnFaulted);
             var error = task.ContinueWith(prior =>
             {
                 var ex = prior.Exception;
-                Console.WriteLine("Error on fetch!");
+                Log.Error("Error on fetch! {error}", ex.Message);
             }, TaskContinuationOptions.OnlyOnFaulted);
             Console.Read();
         }
