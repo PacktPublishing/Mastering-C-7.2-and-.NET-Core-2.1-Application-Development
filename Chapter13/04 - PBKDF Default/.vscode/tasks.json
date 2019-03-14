@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/BCryptHash.csproj"
+                "${workspaceFolder}/PBKDFDefaultHash.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
