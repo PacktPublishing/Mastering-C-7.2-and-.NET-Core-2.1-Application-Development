@@ -14,16 +14,12 @@ namespace AESEncryption
             using (var aes = Aes.Create())
             {
                 byte[] encryptedData;
-                // Declare a Key and an Initialization Vector
-                var key = new byte[16];
-                var iv = new byte[16];
-                // Create a random number generator and generate the key & vector
-                using (var rng = new RNGCryptoServiceProvider())
-                {
-                    rng.GetBytes(key); rng.GetBytes(iv);
-                }
-                // Set the properties of the AES object
-                aes.Key = key; aes.IV = iv;
+                // Declare storage for the Key and and Initialization Vector
+                byte[] key, iv;
+                aes.GenerateIV();
+                aes.GenerateKey();
+                // Get the generated key and IV
+                key = aes.Key; iv = aes.IV;
                 // Create an encryptor to carry out the encryption
                 var encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
                 // Carry out the encryption
