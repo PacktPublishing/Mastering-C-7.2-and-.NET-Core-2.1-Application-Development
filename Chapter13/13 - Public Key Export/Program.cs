@@ -16,8 +16,8 @@ namespace PublicKeyExport
                 var publicKeyPath = Path.Combine(Path.GetTempPath(), "PublicKey.xml");
                 var publicAndPrivateKeyPath = Path.Combine(Path.GetTempPath(), "AllKeys.xml");
                 // Save the keys to disk
-                File.WriteAllText(publicKeyPath, rsa.ToXmlString(false));
-                File.WriteAllText(publicAndPrivateKeyPath, rsa.ToXmlString(true));
+                File.WriteAllText(publicKeyPath, rsa.ToXmlString(includePrivateParameters: false));
+                File.WriteAllText(publicAndPrivateKeyPath, rsa.ToXmlString(includePrivateParameters: true));
                 Log.Information("Public Key was saved to {path}", publicKeyPath);
                 Log.Information("Public & Private Keys were saved to {path}", publicAndPrivateKeyPath);
             }
